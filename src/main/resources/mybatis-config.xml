@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias alias="orderlist" type="com.spring.more.orders.model.vo.OrderListVO"/>
+		<typeAlias alias="wish" type="com.spring.more.project.model.vo.WishListVO"/>
+		<typeAlias alias="wishlist" type="com.spring.more.project.model.vo.WishProVO"/>
+	</typeAliases>
+  
+</configuration>

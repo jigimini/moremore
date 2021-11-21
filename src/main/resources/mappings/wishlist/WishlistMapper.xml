@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="wishlistDAO">
+
+<!-- 좋아요 담기 -->
+<insert id="insertWishList" parameterType="wish">
+	INSERT INTO WISHLIST (WISH_NO, PRO_NO, USER_NO) VALUES (WISHLIST_SEQ.NEXTVAL, #{pro_no}, #{user_no})
+</insert>
+
+<!-- 좋아요 취소(삭제) -->
+<delete id="deleteWishList" parameterType="wish">
+   DELETE FROM WISHLIST WHERE PRO_NO=#{pro_no} AND USER_NO= #{user_no}
+</delete>
+
+<!-- 좋아요 조회 -->
+<select id="getWishList" parameterType="wishlist" resultType="wishlist">
+	SELECT W.USER_NO, W.PRO_NO,
+	       P.PRO_THUMBNAIL_PATH, P.PRO_TITLE, P.PRO_CLOSE_DT, P.PRO_STATUS
+	  FROM WISHLIST W, PROJECT P
+	 WHERE W.PRO_NO = P.PRO_NO
+	   AND W.USER_NO = #{user_no}
+	 ORDER BY P.PRO_NO DESC  
+</select>
+<!-- 좋아요 하나만 조회 -->
+<select id="getOneWishList" parameterType="wish" resultType="wish">
+	SELECT * FROM WISHLIST W WHERE W.PRO_NO=#{pro_no} AND W.USER_NO =#{user_no}
+</select>
+</mapper>

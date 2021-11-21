@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="orderListDAO">
+
+<!-- 참여 펀딩 리스트 조회 -->
+<select id="getOrderList" parameterType="orderlist" resultType="orderlist">
+	SELECT P.PRO_NO, P.PRO_TITLE, P.PRO_THUMBNAIL_PATH, P.PRO_STATUS,
+       O.USER_NO, O.ORDER_NO, O.ORDER_DATE, D.ORDER_STATUS,
+       G.GOODS_TITLE, PAY.PAYMENT_PRICE, D.ORDER_EA
+    FROM PROJECT P, ORDERS O, GOODS G, PAYMENT PAY, ORDER_DETAIL D
+    WHERE P.PRO_NO = O.PRO_NO
+       AND D.GOODS_NO = G.GOODS_NO
+       AND O.ORDER_NO = PAY.ORDER_NO 
+       AND O.ORDER_NO = D.ORDER_NO
+       AND O.USER_NO = #{user_no}
+    ORDER BY O.ORDER_NO DESC
+</select>
+
+<update id="updateOrderStatus" parameterType="orderlist">
+	UPDATE ORDER_DETAIL D 
+	SET D.ORDER_STATUS='취소요청' 
+	WHERE D.ORDER_NO=#{order_no}
+</update>
+<select id="getOrder" parameterType="orderlist" resultType="orderlist">
+	SELECT D.ORDER_STATUS
+   	FROM ORDER_DETAIL D
+    WHERE  D.ORDER_NO = #{order_no}
+</select>
+</mapper>  
